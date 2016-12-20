@@ -1,0 +1,2 @@
+class GraphReprBase(object):
+    pass
