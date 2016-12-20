@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from GraphRepr import (GraphReprBase,
                        AdjacencyList,
                        AdjacencyMatrix,
@@ -8,6 +10,7 @@ class Graph(object):
     def __init__(self, vertices):
         self.vertices = {}
         self.top_vertices = None
+        self.bottom_vertices = None
 
         assert isinstance(vertices, GraphReprBase), \
             'Graph can be constructed only from GraphRepr object'
@@ -28,8 +31,7 @@ class Graph(object):
                                      'to not-specified vertex {1}'.format(vertex, adjacent_vertex))
 
         self.find_top_vertices()
-        if not self.top_vertices:
-            raise ValueError('Invalid graph - there are no top vertices')
+        self.find_bottom_vertices()
 
     def _init_from_adjacency_list(self, adjacency_list):
         for vertex in adjacency_list:
@@ -64,7 +66,15 @@ class Graph(object):
         for vertex in self.vertices:
             self.top_vertices -= set(self.vertices[vertex])
 
+    def find_bottom_vertices(self):
+        self.bottom_vertices = set()
+        for vertex in self.vertices:
+            if not self.vertices[vertex]:
+                self.bottom_vertices.add(vertex)
+
     def is_cyclic(self):
+        if not self.top_vertices or not self.bottom_vertices:
+            return True
 
         class MarkedVerticesGuard(object):
 
@@ -96,3 +106,27 @@ class Graph(object):
             if _is_cyclic(vertex, marked_vertices):
                 return True
         return False
+
+    def build_s_lower(self):
+        s = []
+        temp_graph = deepcopy(self)
+        while temp_graph.top_vertices:
+            s.append(temp_graph.top_vertices)
+            for vertex in temp_graph.top_vertices:
+                del temp_graph.vertices[vertex]
+            temp_graph.find_top_vertices()
+        return s
+
+    def build_s_upper(self):
+        s = []
+        temp_graph = deepcopy(self)
+        while temp_graph.bottom_vertices:
+            s.append(temp_graph.bottom_vertices)
+            for vertex in temp_graph.vertices:
+                temp_graph.vertices[vertex] -= \
+                    temp_graph.bottom_vertices
+            for vertex in temp_graph.bottom_vertices:
+                del temp_graph.vertices[vertex]
+            temp_graph.find_bottom_vertices()
+        s.reverse()
+        return s

@@ -56,7 +56,7 @@ def al_acyclic_graph_2():
         Vx(5, 8),
         Vx(6, 8),
         Vx(7, 9),
-        Vx(8, 9, ),
+        Vx(8, 9),
         Vx(9),
         Vx(10, 2)
     ])
