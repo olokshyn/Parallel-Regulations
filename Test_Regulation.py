@@ -39,3 +39,15 @@ class TestRegulation(TestCase):
         self.assertTrue([{0, 1}, {2}, {3}, {4, 5}, {6, 7}],
                         r.build_s_upper())
         self.assertEqual(Graph(CreateGraph.al_acyclic_graph_3()), r.graph)
+
+    def test_build_regulation(self):
+        r = Regulation(Graph(CreateGraph.al_acyclic_graph_1()))
+        self.assertEqual([{0, 3}, {1, 2}, {5, 6}, {4, 8}, {7}],
+                         r.build_regulation(5, 2))
+        self.assertEqual(Graph(CreateGraph.al_acyclic_graph_1()), r.graph)
+
+        r = Regulation(Graph(CreateGraph.al_acyclic_graph_4()))
+        self.assertEqual([{0, 10, 11}, {1, 2, 12}, {3, 4, 5},
+                          {6, 7, 13}, {8}, {9}],
+                         r.build_regulation(6, 3))
+        self.assertEqual(Graph(CreateGraph.al_acyclic_graph_4()), r.graph)
