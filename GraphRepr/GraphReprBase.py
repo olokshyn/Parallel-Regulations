@@ -1,2 +1,5 @@
 class GraphReprBase(object):
-    pass
+
+    @staticmethod
+    def read_from_file(input_file):
+        raise NotImplemented()

@@ -16,3 +16,13 @@ class AdjacencyMatrix(GraphReprBase):
 
     def __iter__(self):
         return iter(self.adjacency_matrix)
+
+    @staticmethod
+    def read_from_file(input_file):
+        adjacency_matrix = []
+        for line in input_file:
+            row = map(lambda x: int(x), line.split())
+            if not row:
+                raise ValueError('File contains empty row')
+            adjacency_matrix.append(row)
+        return AdjacencyMatrix(adjacency_matrix)

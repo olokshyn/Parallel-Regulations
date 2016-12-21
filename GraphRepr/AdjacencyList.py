@@ -26,3 +26,13 @@ class AdjacencyList(GraphReprBase):
 
     def __iter__(self):
         return iter(self.adjacency_list)
+
+    @staticmethod
+    def read_from_file(input_file):
+        adjacency_list = []
+        for line in input_file:
+            row = map(lambda x: int(x), line.split())
+            if not row:
+                raise ValueError('File contains empty row')
+            adjacency_list.append(Vertex(row[0], row[1:]))
+        return AdjacencyList(adjacency_list)

@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from Graph import Graph
+from GraphRepr import GraphReprReader
 import CreateGraph
 
 
@@ -16,6 +17,23 @@ class TestGraph(TestCase):
         Graph(CreateGraph.al_acyclic_graph_2())
 
         Graph(CreateGraph.al_acyclic_graph_3())
+
+    def test_load_from_file(self):
+        g1 = Graph(CreateGraph.al_acyclic_graph_1())
+
+        g1_al = Graph(GraphReprReader.read_from_file('TestFiles/Graph1.al'))
+        g1_am = Graph(GraphReprReader.read_from_file('TestFiles/Graph1.am'))
+        g1_el = Graph(GraphReprReader.read_from_file('TestFiles/Graph1.el'))
+
+        self.assertEqual(g1, g1_al)
+        self.assertEqual(g1, g1_am)
+        self.assertEqual(g1, g1_el)
+
+        g2 = Graph(CreateGraph.al_acyclic_graph_2())
+
+        g2_al = Graph(GraphReprReader.read_from_file('TestFiles/Graph2.al'))
+
+        self.assertEqual(g2, g2_al)
 
     def test_find_top_vertices(self):
         g = Graph(CreateGraph.al_acyclic_graph_1())

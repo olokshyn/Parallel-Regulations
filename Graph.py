@@ -49,6 +49,8 @@ class Graph(object):
 
     def _init_from_edges_list(self, edges_list):
         for edge in edges_list:
+            if len(edge) != 2:
+                raise ValueError('Invalid edge')
             if edge[0] not in self.vertices:
                 self.vertices[edge[0]] = set()
             if edge[1] not in self.vertices:
