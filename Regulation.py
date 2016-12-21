@@ -74,3 +74,32 @@ class Regulation(object):
             graph.find_top_vertices()
 
             k += 1
+
+    def minimize_h(self, target_l):
+        if not self.s_lower:
+            self.build_s_lower()
+        if not self.s_upper:
+            self.build_s_upper()
+
+        def get_regulation_height(regulation):
+            return max(map(lambda x: len(x), regulation))
+
+        h_min = len(self.graph.vertices) / target_l
+        if len(self.graph.vertices) % target_l:
+            h_min += 1
+        h_max = min(get_regulation_height(self.s_lower),
+                    get_regulation_height(self.s_upper))
+
+        a = h_min
+        b = h_max
+        result_h = None
+        result_regulation = None
+        while a <= b:
+            h = (a + b) / 2
+            result_regulation = self.build_regulation(target_l, h)
+            if result_regulation is not None:
+                b = h - 1
+                result_h = h
+            else:
+                a = h + 1
+        return result_h, result_regulation

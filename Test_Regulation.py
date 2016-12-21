@@ -51,3 +51,10 @@ class TestRegulation(TestCase):
                           {6, 7, 13}, {8}, {9}],
                          r.build_regulation(6, 3))
         self.assertEqual(Graph(CreateGraph.al_acyclic_graph_4()), r.graph)
+
+    def test_minimize_h(self):
+        r = Regulation(Graph(CreateGraph.al_acyclic_graph_1()))
+        self.assertEqual(2, r.minimize_h(5)[0])
+
+        r = Regulation(Graph(CreateGraph.al_acyclic_graph_4()))
+        self.assertEqual(3, r.minimize_h(6)[0])
