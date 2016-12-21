@@ -94,6 +94,26 @@ def al_acyclic_graph_4():
     ])
 
 
+def al_acyclic_graph_5():
+    return Al([
+        Vx(0, 4),
+        Vx(1, 5),
+        Vx(2, (6, 7)),
+        Vx(3, 7),
+        Vx(4, 11),
+        Vx(5, 11),
+        Vx(6, 11),
+        Vx(7, 8),
+        Vx(8, (9, 10)),
+        Vx(9),
+        Vx(10),
+        Vx(11, (12, 13, 14)),
+        Vx(12),
+        Vx(13),
+        Vx(14)
+    ])
+
+
 def al_cyclic_graph_1():
     return Al([
         Vx(0, (2, 3)),

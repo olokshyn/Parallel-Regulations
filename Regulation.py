@@ -96,10 +96,11 @@ class Regulation(object):
         result_regulation = None
         while a <= b:
             h = (a + b) / 2
-            result_regulation = self.build_regulation(target_l, h)
-            if result_regulation is not None:
+            regulation = self.build_regulation(target_l, h)
+            if regulation is not None:
                 b = h - 1
                 result_h = h
+                result_regulation = regulation
             else:
                 a = h + 1
         return result_h, result_regulation
