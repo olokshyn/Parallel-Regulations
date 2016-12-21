@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 from GraphRepr import (GraphReprBase,
                        AdjacencyList,
                        AdjacencyMatrix,
@@ -106,27 +104,3 @@ class Graph(object):
             if _is_cyclic(vertex, marked_vertices):
                 return True
         return False
-
-    def build_s_lower(self):
-        s = []
-        temp_graph = deepcopy(self)
-        while temp_graph.top_vertices:
-            s.append(temp_graph.top_vertices)
-            for vertex in temp_graph.top_vertices:
-                del temp_graph.vertices[vertex]
-            temp_graph.find_top_vertices()
-        return s
-
-    def build_s_upper(self):
-        s = []
-        temp_graph = deepcopy(self)
-        while temp_graph.bottom_vertices:
-            s.append(temp_graph.bottom_vertices)
-            for vertex in temp_graph.vertices:
-                temp_graph.vertices[vertex] -= \
-                    temp_graph.bottom_vertices
-            for vertex in temp_graph.bottom_vertices:
-                del temp_graph.vertices[vertex]
-            temp_graph.find_bottom_vertices()
-        s.reverse()
-        return s
