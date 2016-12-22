@@ -72,8 +72,8 @@ class TestRegulation(TestCase):
             {0, 3},
             {1, 2},
             {5, 6},
-            {4, 8},
-            {7}
+            {7, 8},
+            {4}
         ], r.build_regulation(5, 2))
         self.assertEqual(Graph(CreateGraph.al_acyclic_graph_1()), r.graph)
 
@@ -81,9 +81,9 @@ class TestRegulation(TestCase):
         self.assertEqual([
             {0, 10, 11},
             {1, 2, 12},
-            {3, 4, 5},
-            {6, 7, 13},
-            {8},
+            {4, 5, 6},
+            {8, 3, 13},
+            {7},
             {9}
         ], r.build_regulation(6, 3))
         self.assertEqual(Graph(CreateGraph.al_acyclic_graph_4()), r.graph)
