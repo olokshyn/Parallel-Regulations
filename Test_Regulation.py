@@ -96,8 +96,8 @@ class TestRegulation(TestCase):
             {0, 3},
             {1, 2},
             {5, 6},
-            {4, 8},
-            {7}
+            {7, 8},
+            {4}
         ], regulation)
 
         r = Regulation(Graph(CreateGraph.al_acyclic_graph_4()))
@@ -106,30 +106,20 @@ class TestRegulation(TestCase):
         self.assertEqual([
             {0, 10, 11},
             {1, 2, 12},
-            {3, 4, 5},
-            {6, 7, 13},
-            {8},
+            {4, 5, 6},
+            {8, 3, 13},
+            {7},
             {9}
         ], regulation)
         self.assertEqual(3, r.minimize_h(6)[0])
 
         r = Regulation(Graph(CreateGraph.al_acyclic_graph_5()))
         h, regulation = r.minimize_h(5)
-        self.assertEqual(4, h)
-        self.assertEqual([
-            {0, 1, 2, 3},
-            {4, 5, 6, 7},
-            {8, 11},
-            {9, 10, 12, 13},
-            {14}
-        ], regulation)
-        h, regulation = r.minimize_h(6)
         self.assertEqual(3, h)
         self.assertEqual([
-            {0, 1, 2},
-            {3, 4, 5},
-            {6, 7},
-            {8, 11},
-            {9, 10, 12},
-            {13, 14}
+            {1, 2, 3},
+            {0, 6, 7},
+            {8, 4, 5},
+            {9, 10, 11},
+            {12, 13, 14}
         ], regulation)

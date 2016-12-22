@@ -66,7 +66,10 @@ class Regulation(object):
             for i in xrange(k + 1, target_l):
                 if not vertices_to_move_count:
                     break
-                for vertex in graph.top_vertices & regulation[i]:
+                vertices_to_move = list(graph.top_vertices & regulation[i])
+                if len(vertices_to_move) > vertices_to_move_count:
+                    vertices_to_move.sort(reverse=True)
+                for vertex in vertices_to_move:
                     if not vertices_to_move_count:
                         break
                     regulation[i].remove(vertex)
