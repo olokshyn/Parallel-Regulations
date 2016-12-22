@@ -87,14 +87,15 @@ class BranchAndBound(object):
     def solve(self):
 
         def collect_result(branch, result, regulation):
+            if branch.canceled:
+                return
             regulation = list(regulation)
             regulation.append(branch.regulation_part)
             if not branch.branches:
                 result.append(regulation)
             else:
                 for br in branch.branches:
-                    if not br.canceled:
-                        collect_result(br, result, regulation)
+                    collect_result(br, result, regulation)
 
         self.__build_tree()
 
