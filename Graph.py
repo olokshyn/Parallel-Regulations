@@ -62,9 +62,9 @@ class Graph(object):
                and self.top_vertices == other.top_vertices
 
     def find_top_vertices(self):
-        self.top_vertices = set(self.vertices.keys())
+        self.top_vertices = set(self.vertices)
         for vertex in self.vertices:
-            self.top_vertices -= set(self.vertices[vertex])
+            self.top_vertices -= self.vertices[vertex]
 
     def find_bottom_vertices(self):
         self.bottom_vertices = set()
@@ -106,3 +106,29 @@ class Graph(object):
             if _is_cyclic(vertex, marked_vertices):
                 return True
         return False
+
+    def send_stream(self, vertices):
+        if vertices - self.top_vertices:
+            raise ValueError('Cannot send stream starting from non-top vertices')
+        if self.is_cyclic():
+            raise ValueError('Cannot send stream through a cyclic graph')
+
+        def _send_stream(vertex, marked_vertices):
+            adjacent_vertices = self.vertices[vertex]
+            if not adjacent_vertices:
+                drain = 1
+            else:
+                drain = 0
+                for adjacent_vertex in adjacent_vertices:
+                    if adjacent_vertex not in marked_vertices:
+                        marked_vertices.add(adjacent_vertex)
+                        drain += _send_stream(adjacent_vertex,
+                                              marked_vertices)
+            return drain
+
+        drain = 0
+        marked_vertices = set()
+        for vertex in vertices:
+            marked_vertices.add(vertex)
+            drain += _send_stream(vertex, marked_vertices)
+        return drain

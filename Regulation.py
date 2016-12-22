@@ -13,6 +13,9 @@ class Regulation(object):
         assert isinstance(self.graph, Graph), \
             'graph object must be of type Graph'
 
+        if self.graph.is_cyclic():
+            raise ValueError('Cannot build regulations on a cyclic graph')
+
     def build_s_lower(self):
         s = []
         temp_graph = deepcopy(self.graph)

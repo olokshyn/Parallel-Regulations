@@ -70,3 +70,31 @@ class TestGraph(TestCase):
 
         g = Graph(CreateGraph.al_cyclic_graph_2())
         self.assertTrue(g.is_cyclic())
+
+    def test_send_stream(self):
+        g = Graph(CreateGraph.al_acyclic_graph_1())
+        self.assertEqual(3, g.send_stream({0}))
+        self.assertEqual(1, g.send_stream({3}))
+        self.assertEqual(3, g.send_stream({0, 3}))
+
+        g = Graph(CreateGraph.al_acyclic_graph_2())
+        self.assertEqual(2, g.send_stream({0}))
+        self.assertEqual(1, g.send_stream({3}))
+        self.assertEqual(1, g.send_stream({10}))
+        self.assertEqual(2, g.send_stream({0, 3, 10}))
+
+        g = Graph(CreateGraph.al_acyclic_graph_5())
+        self.assertEqual(3, g.send_stream({0}))
+        self.assertEqual(3, g.send_stream({1}))
+        self.assertEqual(5, g.send_stream({2}))
+        self.assertEqual(2, g.send_stream({3}))
+        self.assertEqual(3, g.send_stream({0, 1}))
+        self.assertEqual(5, g.send_stream({0, 2}))
+        self.assertEqual(5, g.send_stream({0, 3}))
+        self.assertEqual(5, g.send_stream({1, 2}))
+        self.assertEqual(5, g.send_stream({1, 3}))
+        self.assertEqual(5, g.send_stream({2, 3}))
+        self.assertEqual(5, g.send_stream({0, 1, 2}))
+        self.assertEqual(5, g.send_stream({0, 1, 3}))
+        self.assertEqual(5, g.send_stream({0, 2, 3}))
+        self.assertEqual(5, g.send_stream({1, 2, 3}))
