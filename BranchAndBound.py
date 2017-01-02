@@ -105,6 +105,6 @@ class BranchAndBound(object):
             collect_result(br, result, regulation)
 
         min_l = min([len(x) for x in result])
-        result = filter(lambda x: len(x) <= min_l, result)
+        result = filter(lambda x: len(x) == min_l, result)
 
         return result
