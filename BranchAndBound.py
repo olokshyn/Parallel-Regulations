@@ -103,4 +103,8 @@ class BranchAndBound(object):
         regulation = []
         for br in self.top_branch.branches:
             collect_result(br, result, regulation)
+
+        min_l = min([len(x) for x in result])
+        result = filter(lambda x: len(x) <= min_l, result)
+
         return result
